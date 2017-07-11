@@ -59,9 +59,9 @@ sudo echo 1 > /sys/fs/cgroup/memory/memory.use_hierarchy
 update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
 readonly IP_ADDRESS=192.168.33.8
-readonly MESOS_VERSION=1.0.0-2.0.89
+readonly MESOS_VERSION=1.3.0-2.0.3
 readonly MESOS_MODULE=v1.0.0
-readonly MARATHON_VERSION=1.1.2-1.0.482
+readonly MARATHON_VERSION=1.4.5-1.0.654
 
 function install_go {
 
@@ -84,7 +84,7 @@ function install_go {
 }
 
 function install_mesos {
-  apt-get -y install mesos=${MESOS_VERSION}.ubuntu1404
+  apt-get -y install mesos=${MESOS_VERSION}
 }
 
 function prepare_extra {
@@ -98,8 +98,10 @@ function prepare_extra {
 }
 
 function install_aurora {
-  wget -c https://apache.bintray.com/aurora/ubuntu-trusty/aurora-scheduler_0.16.0_amd64.deb
-  sudo dpkg -i aurora-scheduler_0.16.0_amd64.deb
+  wget -c https://apache.bintray.com/aurora/ubuntu-trusty/aurora-scheduler_0.18.0_amd64.deb
+  sudo dpkg -i aurora-scheduler_0.18.0_amd64.deb
+  wget -c https://apache.bintray.com/aurora/aurora-executor_0.11.0_amd64.deb
+  sudo dpkg -i aurora-executor_0.11.0_amd64.deb
   sudo stop aurora-scheduler
   sudo -u aurora mkdir -p /var/lib/aurora/scheduler/db
   sudo -u aurora mesos-log initialize --path=/var/lib/aurora/scheduler/db
